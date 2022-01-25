@@ -1,4 +1,4 @@
-interface IBscscan {
+export interface IBscscan {
     action: string,
     contractAddress?: string,
     address: string,
@@ -6,4 +6,6 @@ interface IBscscan {
     page: Number
 }
 
-export default IBscscan
+export interface IBscscanTokenSupply {
+    contractAddress: string,
+}

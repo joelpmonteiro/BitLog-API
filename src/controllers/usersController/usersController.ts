@@ -9,7 +9,7 @@ export default {
             //Fazer teste de duplicidade de Login nome e email/
             const { name, email, password }: IUser = req.body
 
-            if (( name !== "") && ( email !== "") && (password !== "")) {
+            if ((name !== "") && (email !== "") && (password !== "")) {
                 //busca pelo nome
                 const selectName = await usersModel.find({ name: name })
                 if (selectName.length > 0)
@@ -35,7 +35,7 @@ export default {
     async login(req: Request, res: Response) {
         try {
             const { email, password } = req.body
-            if ((email !== "") && ( password !== "")) {
+            if ((email !== "") && (password !== "")) {
                 const user = await usersModel.findOne({ email: email }).exec();
 
                 if (!user) {
@@ -46,7 +46,7 @@ export default {
                 if (comparePassword) {
                     const token = createToken(email)
                     console.log(user.name)
-                    return res.status(200).send({ token: token, msg: "Login feito com sucesso!",name: user.name });
+                    return res.status(200).send({ token: token, msg: "Login feito com sucesso!", name: user.name });
 
                 } else return res.status(400).send({ msg: "Usuario e senha não coincidem" });
 

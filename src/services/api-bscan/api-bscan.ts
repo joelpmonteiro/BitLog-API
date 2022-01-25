@@ -1,4 +1,4 @@
-import IBscscan from "../../interface/IBscscan";
+import { IBscscan, IBscscanTokenSupply } from "../../interface/IBscscan";
 import api from "../axios";
 
 
@@ -21,6 +21,24 @@ export default {
         } catch (error) {
             throw new Error(`Erro ao fazer requisição para api: ${error}`);
 
+        }
+    },
+    async getBEP_20TokenTotalSupplybyContratact({ contractAddress }: IBscscanTokenSupply) {
+        try {
+            const bep20 = await api.get(`?module=stats&action=tokensupply&contractaddress=${contractAddress}&apikey=${process.env.tokenBscScan}`)
+            if (bep20.status === 200) return bep20.data
+            return []
+        } catch (error) {
+            throw new Error(`Erro ao fazer requisição para api: ${error}`);
+        }
+    },
+    async getBEP_20TokenCirculationSupplybyContratact({ contractAddress }: IBscscanTokenSupply) {
+        try {
+            const bep20 = await api.get(`?module=stats&action=tokenCsupply&contractaddress=${contractAddress}&apikey=${process.env.tokenBscScan}`)
+            if (bep20.status === 200) return bep20.data
+            return []
+        } catch (error) {
+            throw new Error(`Erro ao fazer requisição para api: ${error}`);
         }
     }
 }
