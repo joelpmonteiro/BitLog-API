@@ -22,5 +22,42 @@ export default {
             console.log(error)
             return res.status(500).json({ msg: "Erro interno no sistema!" });
         }
+    },
+
+    async getTokenSupplyByContractAddres(req: Request, res: Response) {
+        try {
+            if (req.params.token !== undefined) {
+                const { token } = req.params
+                const ret = await apiBscscan.getBEP_20TokenTotalSupplybyContratact({ contractAddress: token })
+                if (ret.status === '1' && ret.message === 'OK' && parseInt(ret.result) > 0) {
+                    return res.status(200).json(ret);
+                } else return res.status(404).json({ msg: 'Não foi possivel encontrar nenhum dado!' })
+
+            } else return res.status(404).json({ msg: 'Informe o token corretamente!' })
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ msg: "Erro Interno" })
+        }
+
+    },
+
+    async getTokenCirculatingSupply(req: Request, res: Response) {
+        try {
+            if (req.params.token !== undefined) {
+                const { token } = req.params
+
+                const bep20 = await apiBscscan.getBEP_20TokenCirculationSupplybyContratact({ contractAddress: token })
+
+                if (bep20.status === '1' && bep20.message === 'OK' && parseInt(bep20.result) > 0)
+                    return res.status(200).json({ bep20 })
+                else return res.status(404).json({ msg: 'Não foi encontrado resultado' })
+                //
+            } else return res.status(404).json({ msg: 'Token invalido' })
+            //
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ msg: "Erro Interno" })
+        }
     }
 }
