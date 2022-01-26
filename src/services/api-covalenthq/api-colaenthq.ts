@@ -11,13 +11,14 @@ export default {
     * apikey: Chave da api da bscscan/permissão e etc
     *: Promise<Object[]>
     */
-    async getHistoricalTokenPrices({ chain_id, actual_money, contract_address, page_number, page_size }: ICovalenthq) {
+    async getHistoricalTokenPrices({ chain_id, actual_money, contract_address, page_number, page_size, data_from, data_to }: ICovalenthq) {
         try {
-            console.log({ chain_id, actual_money, contract_address, page_number, page_size })
-            const historical = await api.get(`pricing/historical_by_addresses_v2/${chain_id}/${actual_money}/${contract_address}/?quote-currency=${actual_money}&format=JSON&key=${process.env.apiKey}`)
+            console.log({ chain_id, actual_money, contract_address, page_number, page_size, data_from, data_to })
+            const historical = await api.get(`pricing/historical_by_addresses_v2/${chain_id}/${actual_money}/${contract_address}/?quote-currency=${actual_money} ${data_from !== undefined ? `&from=${data_from}&to=${data_to}&` : '&'}format=JSON&key=${process.env.apiKey}`)
             if (historical.status === 200) return historical.data
             return []
         } catch (error) {
+            console.log(error)
             throw new Error(`Erro ao fazer requisição para api: ${error}`);
 
         }

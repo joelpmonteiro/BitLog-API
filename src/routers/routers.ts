@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import bscanController from "../controllers/bscanController/bscanController";
 import usersController from "../controllers/usersController/usersController";
 import wallestController from "../controllers/walletController/wallletController";
@@ -17,7 +17,7 @@ app.get("/tokenSupplyContractAddress/:token", bscanController.getTokenSupplyByCo
 app.get("/TokenCirculatingSupply/:token", bscanController.getTokenCirculatingSupply)
 
 //api- covalenthq
-app.get("/getHistoricalPriceTokens/:token", colaventhq.getHistoricalPriceTokens)
+app.get("/getHistoricalPriceTokens/:token/:from?/:to?", colaventhq.getHistoricalPriceTokens)
 app.get("/getPriceVolatility", colaventhq.getPriceVolatility)
 // app.get("/test/:id", async (req: Request, res: Response) => {
 //     const id: string = req.params.id
